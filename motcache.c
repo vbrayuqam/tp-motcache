@@ -12,6 +12,7 @@ void rechercheHorizontale(char mot[12], char lettres[12][12], int valeurs[12][12
 void rechercheHorizontaleInverse(char mot[12], char lettres[12][12], int valeurs[12][12]);
 void rechercheVerticale(char mot[12], char lettres[12][12], int valeurs[12][12]);
 void rechercheVerticaleInverse(char mot[12], char lettres[12][12], int valeurs[12][12]);
+void afficherSortie(char lettres[12][12], int valeurs[12][12]);
 
 //Implémentation des fonctions
 void verificationNbArguments(int nbArguments) {
@@ -63,7 +64,7 @@ void rechercheHorizontale(char mot[12], char lettres[12][12], int valeurs[12][12
       char *position = strstr(ligneTemporaire, mot);
       if(position) {
          index = position - ligneTemporaire;
-	 for(int j = index; j < index + strlen(mot); j++) {
+	 for(int j = index; j < index + (int) strlen(mot); j++) {
 	    valeurs[i][j] = 1;
 	 }
       }      
@@ -81,7 +82,7 @@ void rechercheHorizontaleInverse(char mot[12], char lettres[12][12], int valeurs
       char *position = strstr(ligneTemporaire, mot);
       if(position) {
          index = position - ligneTemporaire;
-         for(int j = 11 - index; j > (11 - index) - strlen(mot); j--) {
+         for(int j = 11 - index; j > (11 - index) - (int) strlen(mot); j--) {
             valeurs[i][j] = 1;
          }
       }
@@ -98,7 +99,7 @@ void rechercheVerticale(char mot[12], char lettres[12][12], int valeurs[12][12])
       char *position = strstr(ligneTemporaire, mot);
       if(position) {
          index = position - ligneTemporaire;
-         for(int j = index; j < index + strlen(mot); j++) {
+         for(int j = index; j < index + (int) strlen(mot); j++) {
             valeurs[j][i] = 1;
          }
       }
@@ -116,7 +117,7 @@ void rechercheVerticaleInverse(char mot[12], char lettres[12][12], int valeurs[1
       char *position = strstr(ligneTemporaire, mot);
       if(position) {
          index = position - ligneTemporaire;
-         for(int j = 11 - index; j > (11 - index) - strlen(mot); j--) {
+         for(int j = 11 - index; j > (11 - index) - (int) strlen(mot); j--) {
             valeurs[j][i] = 1;
          }
       }
@@ -140,8 +141,20 @@ void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12]
    fclose(fptr);
 }
 
+void afficherSortie(char lettres[12][12], int valeurs[12][12]) {
+   char sortie[0];
+   for(int i = 0; i < 12; i++) {
+      for(int j = 0; j < 12; j++) {
+         if(valeurs[i][j] == 0) {
+	    printf("%c", lettres[i][j]);
+	 }
+      }
+   }
+   printf("\n");
+}
+
 //Fonction main
-void main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
    char grilleLettres[12][12];
    int grilleValeurs[12][12];
 
@@ -150,18 +163,7 @@ void main(int argc, char *argv[]) {
    lectureGrille(argv[1], grilleLettres);
    initialisationGrilleValeurs(grilleValeurs);
    parcourirGrille(argv[1], grilleLettres, grilleValeurs);
-   //Definir le mot de sortie
-   //Afficher la sortie
-   for(int i = 0; i < 12; i++) {
-      for(int j = 0; j < 12; j++) {
-         printf("%c", grilleLettres[i][j]);
-      }
-      printf("\n");
-   }
-   for(int i = 0; i < 12; i++) {
-      for(int j = 0; j < 12; j++) {
-         printf("%d", grilleValeurs[i][j]);
-      }
-      printf("\n");
-   }
+   afficherSortie(grilleLettres, grilleValeurs);
+
+   return 0;
 }
