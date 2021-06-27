@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-//Déclaration des fonctions
 void verificationNbArguments(int nbArguments);
 void verificationFichierEntree(char cheminFichier[]);
 void lectureFichier(char cheminFichier[], char grille[12][12]);
@@ -14,7 +13,6 @@ void rechercheVerticale(char mot[12], char lettres[12][12], int valeurs[12][12])
 void rechercheVerticaleInverse(char mot[12], char lettres[12][12], int valeurs[12][12]);
 void afficherSortie(char lettres[12][12], int valeurs[12][12]);
 
-//Implémentation des fonctions
 void verificationNbArguments(int nbArguments) {
    if(nbArguments != 2) {
       perror("\nNombre d'arguments érroné, ce programme n'accepte qu'un argument.\n");
@@ -25,10 +23,12 @@ void verificationNbArguments(int nbArguments) {
 void verificationFichierEntree(char cheminFichier[]) {
    FILE *fptr;
    fptr = fopen(cheminFichier, "r");
+   
    if(fptr == NULL) {
       perror("\nFichier non existant, fin du programme.\n");
       exit(-1);
    }
+   
    fclose(fptr);
 }
 
@@ -37,6 +37,7 @@ void lectureGrille(char cheminFichier[], char grille[12][12]) {
    fptr = fopen(cheminFichier, "r");
    char ligne[12];
    int compteur = 0;
+   
    while((fscanf(fptr, "%s", ligne) != EOF) && compteur != 12) {
       for(int i = 0; i < 12; i++) {
          grille[compteur][i] = ligne[i];
@@ -58,10 +59,13 @@ void rechercheHorizontale(char mot[12], char lettres[12][12], int valeurs[12][12
    for(int i = 0; i < 12; i++) {
       int index = 0;
       char ligneTemporaire[12];
+      
       for(int j = 0; j < 12; j++) {
          ligneTemporaire[j] = lettres[i][j];
       }
+      
       char *position = strstr(ligneTemporaire, mot);
+      
       if(position) {
          index = position - ligneTemporaire;
 	 for(int j = index; j < index + (int) strlen(mot); j++) {
@@ -75,11 +79,14 @@ void rechercheHorizontaleInverse(char mot[12], char lettres[12][12], int valeurs
    for(int i = 0; i < 12; i++) {
       int index = 0;
       char ligneTemporaire[12];
+      
       for(int j = 0; j < 12; j++) {
          int indexInverse = 11 - j;
          ligneTemporaire[j] = lettres[i][indexInverse];
       }
+      
       char *position = strstr(ligneTemporaire, mot);
+      
       if(position) {
          index = position - ligneTemporaire;
          for(int j = 11 - index; j > (11 - index) - (int) strlen(mot); j--) {
@@ -93,10 +100,13 @@ void rechercheVerticale(char mot[12], char lettres[12][12], int valeurs[12][12])
    for(int i = 0; i < 12; i++) {
       int index = 0;
       char ligneTemporaire[12];
+      
       for(int j = 0; j < 12; j++) {
          ligneTemporaire[j] = lettres[j][i];
       }
+      
       char *position = strstr(ligneTemporaire, mot);
+      
       if(position) {
          index = position - ligneTemporaire;
          for(int j = index; j < index + (int) strlen(mot); j++) {
@@ -110,11 +120,14 @@ void rechercheVerticaleInverse(char mot[12], char lettres[12][12], int valeurs[1
    for(int i = 0; i < 12; i++) {
       int index = 0;
       char ligneTemporaire[12];
+      
       for(int j = 0; j < 12; j++) {
          int indexInverse = 11 - j;
          ligneTemporaire[j] = lettres[indexInverse][i];
       }
+      
       char *position = strstr(ligneTemporaire, mot);
+      
       if(position) {
          index = position - ligneTemporaire;
          for(int j = 11 - index; j > (11 - index) - (int) strlen(mot); j--) {
@@ -129,6 +142,7 @@ void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12]
    fptr = fopen(cheminFichier, "r");
    char ligne[13];
    int compteur = 0;
+   
    while((fscanf(fptr, "%s", ligne) != EOF)) {
       if(compteur >= 12) {
          rechercheHorizontale(ligne, lettres, valeurs);
@@ -138,11 +152,13 @@ void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12]
       }
       compteur++;
    }
+   
    fclose(fptr);
 }
 
 void afficherSortie(char lettres[12][12], int valeurs[12][12]) {
    char sortie[0];
+   
    for(int i = 0; i < 12; i++) {
       for(int j = 0; j < 12; j++) {
          if(valeurs[i][j] == 0) {
@@ -150,20 +166,20 @@ void afficherSortie(char lettres[12][12], int valeurs[12][12]) {
 	 }
       }
    }
+   
    printf("\n");
 }
 
-//Fonction main
 int main(int argc, char *argv[]) {
    char grilleLettres[12][12];
    int grilleValeurs[12][12];
-
+   
    verificationNbArguments(argc);
    verificationFichierEntree(argv[1]);
    lectureGrille(argv[1], grilleLettres);
    initialisationGrilleValeurs(grilleValeurs);
    parcourirGrille(argv[1], grilleLettres, grilleValeurs);
    afficherSortie(grilleLettres, grilleValeurs);
-
+   
    return 0;
 }
