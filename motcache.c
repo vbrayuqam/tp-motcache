@@ -1,14 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-//Definir les fonctions
+//Déclaration des fonctions
 void verificationNbArguments(int nbArguments);
 void verificationFichierEntree(char cheminFichier[]);
 void lectureFichier(char cheminFichier[], char grille[12][12]);
 void initialisationGrilleValeurs(int grille[12][12]);
 void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12][12]);
+void rechercheHorizontale(char mot[12], char lettres[12][12], int valeurs[12][12]);
+//void rechercheVerticale();
 
-//Implementer les fonctions
+//Implémentation des fonctions
 void verificationNbArguments(int nbArguments) {
    if(nbArguments != 2) {
       perror("\nNombre d'arguments érroné, ce programme n'accepte qu'un argument.\n");
@@ -48,6 +51,21 @@ void initialisationGrilleValeurs(int grille[12][12]) {
    }
 }
 
+void rechercheHorizontale(char mot[12], char lettres[12][12], int valeurs[12][12]) {
+   //Section de fonction
+   for(int i = 0; i < 12; i++) {
+      char ligneTemporaire[12];
+      for(int j = 0; j < 12; j++) {
+         ligneTemporaire[j] = lettres[i][j];
+      }
+      printf("\n%s\n", ligneTemporaire);
+      char *pos = strstr(ligneTemporaire, mot);
+      if(pos) {
+         //Ajustement grille
+      }      
+   }
+}
+
 void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12][12]) {
    FILE *fptr;
    fptr = fopen(cheminFichier, "r");
@@ -55,13 +73,10 @@ void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12]
    int compteur = 0;
    while((fscanf(fptr, "%s", ligne) != EOF)) {
       if(compteur >= 12) {
-         //rh1
+         rechercheHorizontale(ligne, lettres, valeurs);
 	 //rh2
 	 //rv1
 	 //rv2
-	 
-	 //Test de ligne
-	 printf("\n%s", ligne);
       }
       compteur++;
    }
@@ -77,22 +92,6 @@ void main(int argc, char *argv[]) {
    verificationFichierEntree(argv[1]);
    lectureGrille(argv[1], grilleLettres);
    initialisationGrilleValeurs(grilleValeurs);
-
-   //Test de grilleLettres
-   for(int i = 0; i < 12; i++) {
-      for(int j = 0; j < 12; j++) {
-         printf("%c", grilleLettres[i][j]);
-      }
-      printf("\n");
-   }
-   //Test grilleValeurs
-   for(int i = 0; i < 12; i++) {
-      for(int j = 0; j < 12; j++) {
-         printf("%d", grilleValeurs[i][j]);
-      }
-      printf("\n");
-   }
-   
    parcourirGrille(argv[1], grilleLettres, grilleValeurs);
    //Definir le mot de sortie
    //Afficher la sortie
