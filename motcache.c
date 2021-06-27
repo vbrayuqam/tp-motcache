@@ -9,9 +9,9 @@ void lectureFichier(char cheminFichier[], char grille[12][12]);
 void initialisationGrilleValeurs(int grille[12][12]);
 void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12][12]);
 void rechercheHorizontale(char mot[12], char lettres[12][12], int valeurs[12][12]);
-void rechercheHorizontaleInverse();
-void rechercheVerticale();
-void rechercheVerticaleInverse();
+void rechercheHorizontaleInverse(char mot[12], char lettres[12][12], int valeurs[12][12]);
+void rechercheVerticale(char mot[12], char lettres[12][12], int valeurs[12][12]);
+void rechercheVerticaleInverse(char mot[12], char lettres[12][12], int valeurs[12][12]);
 
 //Implémentation des fonctions
 void verificationNbArguments(int nbArguments) {
@@ -70,6 +70,34 @@ void rechercheHorizontale(char mot[12], char lettres[12][12], int valeurs[12][12
    }
 }
 
+void rechercheHorizontaleInverse(char mot[12], char lettres[12][12], int valeurs[12][12]) {
+   for(int i = 0; i < 12; i++) {
+      int index = 0;
+      char ligneTemporaire[12];
+      for(int j = 0; j < 12; j++) {
+         int indexInverse = 11 - j;
+         ligneTemporaire[j] = lettres[i][indexInverse];
+      }
+      printf("\nLigne: %s\n", ligneTemporaire);
+      char *position = strstr(ligneTemporaire, mot);
+      if(position) {
+	 printf("\nMot: %s present\n", mot);
+         index = position - ligneTemporaire;
+         for(int j = 11 - index; j > (11 - index) - strlen(mot); j--) {
+            valeurs[i][j] = 1;
+         }
+      }
+   }
+}
+
+void rechercheVerticale(char mot[12], char lettres[12][12], int valeurs[12][12]) {
+
+}
+
+void rechercheVerticaleInverse(char mot[12], char lettres[12][12], int valeurs[12][12]) {
+
+}
+
 void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12][12]) {
    FILE *fptr;
    fptr = fopen(cheminFichier, "r");
@@ -78,7 +106,7 @@ void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12]
    while((fscanf(fptr, "%s", ligne) != EOF)) {
       if(compteur >= 12) {
          rechercheHorizontale(ligne, lettres, valeurs);
-	 //rh2
+	 rechercheHorizontaleInverse(ligne, lettres, valeurs);
 	 //rv1
 	 //rv2
       }
