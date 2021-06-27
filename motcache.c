@@ -157,8 +157,6 @@ void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12]
 }
 
 void afficherSortie(char lettres[12][12], int valeurs[12][12]) {
-   char sortie[0];
-   
    for(int i = 0; i < 12; i++) {
       for(int j = 0; j < 12; j++) {
          if(valeurs[i][j] == 0) {
