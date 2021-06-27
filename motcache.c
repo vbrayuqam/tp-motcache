@@ -9,7 +9,9 @@ void lectureFichier(char cheminFichier[], char grille[12][12]);
 void initialisationGrilleValeurs(int grille[12][12]);
 void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12][12]);
 void rechercheHorizontale(char mot[12], char lettres[12][12], int valeurs[12][12]);
-//void rechercheVerticale();
+void rechercheHorizontaleInverse();
+void rechercheVerticale();
+void rechercheVerticaleInverse();
 
 //Implémentation des fonctions
 void verificationNbArguments(int nbArguments) {
@@ -52,16 +54,18 @@ void initialisationGrilleValeurs(int grille[12][12]) {
 }
 
 void rechercheHorizontale(char mot[12], char lettres[12][12], int valeurs[12][12]) {
-   //Section de fonction
    for(int i = 0; i < 12; i++) {
+      int index = 0;
       char ligneTemporaire[12];
       for(int j = 0; j < 12; j++) {
          ligneTemporaire[j] = lettres[i][j];
       }
-      printf("\n%s\n", ligneTemporaire);
-      char *pos = strstr(ligneTemporaire, mot);
-      if(pos) {
-         //Ajustement grille
+      char *position = strstr(ligneTemporaire, mot);
+      if(position) {
+         index = position - ligneTemporaire;
+	 for(int j = index; j < index + strlen(mot); j++) {
+	    valeurs[i][j] = 1;
+	 }
       }      
    }
 }
@@ -69,7 +73,7 @@ void rechercheHorizontale(char mot[12], char lettres[12][12], int valeurs[12][12
 void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12][12]) {
    FILE *fptr;
    fptr = fopen(cheminFichier, "r");
-   char ligne[12];
+   char ligne[13];
    int compteur = 0;
    while((fscanf(fptr, "%s", ligne) != EOF)) {
       if(compteur >= 12) {
@@ -95,4 +99,16 @@ void main(int argc, char *argv[]) {
    parcourirGrille(argv[1], grilleLettres, grilleValeurs);
    //Definir le mot de sortie
    //Afficher la sortie
+   for(int i = 0; i < 12; i++) {
+      for(int j = 0; j < 12; j++) {
+         printf("%c", grilleLettres[i][j]);
+      }
+      printf("\n");
+   }
+   for(int i = 0; i < 12; i++) {
+      for(int j = 0; j < 12; j++) {
+         printf("%d", grilleValeurs[i][j]);
+      }
+      printf("\n");
+   }
 }
