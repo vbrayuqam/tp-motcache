@@ -6,6 +6,7 @@ void verificationNbArguments(int nbArguments);
 void verificationFichierEntree(char cheminFichier[]);
 void lectureFichier(char cheminFichier[], char grille[12][12]);
 void initialisationGrilleValeurs(int grille[12][12]);
+void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12][12]);
 
 //Implementer les fonctions
 void verificationNbArguments(int nbArguments) {
@@ -47,6 +48,26 @@ void initialisationGrilleValeurs(int grille[12][12]) {
    }
 }
 
+void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12][12]) {
+   FILE *fptr;
+   fptr = fopen(cheminFichier, "r");
+   char ligne[12];
+   int compteur = 0;
+   while((fscanf(fptr, "%s", ligne) != EOF)) {
+      if(compteur >= 12) {
+         //rh1
+	 //rh2
+	 //rv1
+	 //rv2
+	 
+	 //Test de ligne
+	 printf("\n%s", ligne);
+      }
+      compteur++;
+   }
+   fclose(fptr);
+}
+
 //Fonction main
 void main(int argc, char *argv[]) {
    char grilleLettres[12][12];
@@ -71,8 +92,8 @@ void main(int argc, char *argv[]) {
       }
       printf("\n");
    }
-      //Creation table de mots a trouver
-   //Parcourir la grille et trouvers les mots
+   
+   parcourirGrille(argv[1], grilleLettres, grilleValeurs);
    //Definir le mot de sortie
    //Afficher la sortie
 }
