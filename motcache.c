@@ -3,6 +3,7 @@
 
 //Definir les fonctions
 void verificationNbArguments(int nbArguments);
+void verificationFichierEntree(char cheminFichier[]);
 
 //Implementer les fonctions
 void verificationNbArguments(int nbArguments) {
@@ -12,8 +13,19 @@ void verificationNbArguments(int nbArguments) {
    }
 }
 
+void verificationFichierEntree(char cheminFichier[]) {
+   FILE *fptr;
+   fptr = fopen(cheminFichier, "r");
+   if(fptr == NULL) {
+      perror("\nFichier non existant, fin du programme.\n");
+      exit(-1);
+   }
+   fclose(fptr);
+}
+
 void main(int argc, char *argv[]) {
    verificationNbArguments(argc);
+   verificationFichierEntree(argv[1]);
    //Lecture de la grille
       //Creation grille de mots
       //Creation grille de valeurs
