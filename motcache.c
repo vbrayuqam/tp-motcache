@@ -95,7 +95,6 @@ void rechercheVerticale(char mot[12], char lettres[12][12], int valeurs[12][12])
       for(int j = 0; j < 12; j++) {
          ligneTemporaire[j] = lettres[j][i];
       }
-      printf("\nligne vert: %s\n", ligneTemporaire);
       char *position = strstr(ligneTemporaire, mot);
       if(position) {
          index = position - ligneTemporaire;
@@ -107,7 +106,21 @@ void rechercheVerticale(char mot[12], char lettres[12][12], int valeurs[12][12])
 }
 
 void rechercheVerticaleInverse(char mot[12], char lettres[12][12], int valeurs[12][12]) {
-
+   for(int i = 0; i < 12; i++) {
+      int index = 0;
+      char ligneTemporaire[12];
+      for(int j = 0; j < 12; j++) {
+         int indexInverse = 11 - j;
+         ligneTemporaire[j] = lettres[indexInverse][i];
+      }
+      char *position = strstr(ligneTemporaire, mot);
+      if(position) {
+         index = position - ligneTemporaire;
+         for(int j = 11 - index; j > (11 - index) - strlen(mot); j--) {
+            valeurs[j][i] = 1;
+         }
+      }
+   }
 }
 
 void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12][12]) {
@@ -120,7 +133,7 @@ void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12]
          rechercheHorizontale(ligne, lettres, valeurs);
 	 rechercheHorizontaleInverse(ligne, lettres, valeurs);
 	 rechercheVerticale(ligne, lettres, valeurs);
-	 //rv2
+	 rechercheVerticaleInverse(ligne, lettres, valeurs);
       }
       compteur++;
    }
