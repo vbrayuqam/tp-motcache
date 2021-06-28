@@ -1,17 +1,96 @@
+//Inclusion des librairies
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+
+//Déclaration des fonctions
+
+/**
+* Verifie si le nombre d'argument est adéquat selon les paramètres du logiciel.
+*
+* @param  nbArguments  Le nombre d'arguments fourni au logiciel
+*/
 void verificationNbArguments(int nbArguments);
+
+/**
+* Verifie si le ficher fourni en entrée existe.
+* 
+* @param  cheminFichier  Chemin relatif ou absolu menant vers le fichier
+*/
 void verificationFichierEntree(char cheminFichier[]);
+
+/**
+* Lis le fichier est mets la grille de mot cachés dans une grille de char.
+*
+* @param  grille  Matrice qui recevra les lettres 
+* @param  cheminFichier  Chemin relatif ou absolu menant vers le ficher
+*/
 void lectureFichier(char cheminFichier[], char grille[12][12]);
+
+/**
+* Initialise la grille des valeurs.
+*
+* @param  grille  Matrice de int qui recevra les valeurs
+*/
 void initialisationGrilleValeurs(int grille[12][12]);
+
+/**
+* Parcoure la grille et extrait les mots qui doivent être trouver à l'intérieur.
+*
+* @param  lettres  Matrice contenant les lettres du mot caché
+* @param  valeurs  Matrice contenant représantant si une lettre est utilisée par un mot
+* @param  cheminFichier  Chemin relatif ou absolu menant vers le fichier
+*/
 void parcourirGrille(char cheminFichier[], char lettres[12][12], int valeurs[12][12]);
+
+/**
+* Recherche les mots dans la grille du mot caché, de gauche à droite.
+*
+* @param mot  Mot dont la recherche doit être effectuer
+* @param  lettres  Matrice contenant les lettres du mot caché
+* @param  valeurs  Matrice contenant des valeurs qui représente l'utilisation des lettres du mot caché
+*/
 void rechercheHorizontale(char mot[12], char lettres[12][12], int valeurs[12][12]);
+
+/**
+* Recherche les mots dans la grille du mot caché, de droite à gauche.
+*
+* @param  mot  Mot dont la recherche doit être effectuer
+* @param  lettres  Matrice contenant les lettres du mot caché
+* @param  valeurs  Matrice contenant des valeurs qui représente l'utilisation des lettres du mot caché
+*/
 void rechercheHorizontaleInverse(char mot[12], char lettres[12][12], int valeurs[12][12]);
+
+/**
+* Recherche les mots dans la grille du mot caché, de haut en bas.
+*
+* @param  mot  Mot dont la recherche doit être effectuer
+* @param  lettres  Matrice contenant les lettres du mot caché
+* @param  valeurs  Matrice contenant des valeurs qui représente l'utilisation des lettres du mot caché
+*/
 void rechercheVerticale(char mot[12], char lettres[12][12], int valeurs[12][12]);
+
+/**
+* Recherche les mots dans la grille du mot caché, de bas en haut.
+* 
+* @param  mot  Mot dont la recherche doit être effectuer
+* @param  lettres  Matrice contenant les lettres du mot caché
+* @param  valeurs  Matrice contenant des valeurs qui représente l'utilisation des lettres du mot caché
+*/
 void rechercheVerticaleInverse(char mot[12], char lettres[12][12], int valeurs[12][12]);
+
+/**
+* Affiche la sortie du programme, la solution du mot caché.
+* 
+* @param  lettres  Matrice contenant les lettres du mot caché
+* @param  valeurs  Matrice contenant des valeurs qui représente l'utilisation des lettres du mot caché
+*/
 void afficherSortie(char lettres[12][12], int valeurs[12][12]);
+
+
+//Implémentation des fonctions
 
 void verificationNbArguments(int nbArguments) {
    if(nbArguments != 2) {
